@@ -7,7 +7,7 @@
 import re
 import os 
 
-class GradingHelperTest():
+class GradingHelper():
 	def readFileNames(self, res, repo_path):
 		if repo_path.find(".") is not -1:
 			res.append(item)
@@ -36,3 +36,8 @@ class GradingHelperTest():
 			if ((filename.find("test") is -1) and (filename.find("Test") is -1) and (filename.find("TEST") is -1)):
 				res.append(filename)
 		return res
+
+	def countLines(self, filenames):
+		for filename in filenames:
+			os.system("cloc " + filename[:-1])
+
