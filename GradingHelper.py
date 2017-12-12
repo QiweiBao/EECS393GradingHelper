@@ -8,6 +8,7 @@ import re
 import os 
 
 class GradingHelper():
+	# Read names of all the files from a direcotry
 	def readFileNames(self, res, repo_path):
 		if repo_path.find(".") is not -1:
 			res.append(item)
@@ -23,6 +24,7 @@ class GradingHelper():
 				# fileAndDir.append(item)
 		return res
 
+	# Select file names of test cases
 	def selectTestCases(self, filenames):
 		res = []
 		for filename in filenames:
@@ -30,6 +32,7 @@ class GradingHelper():
 				res.append(filename)
 		return res
 
+	# Select file names of codes
 	def selectCodes(self, filenames):
 		res = []
 		for filename in filenames:
@@ -37,7 +40,23 @@ class GradingHelper():
 				res.append(filename)
 		return res
 
+	# Count lines of codes using cloc
 	def countLines(self, filenames):
 		for filename in filenames:
 			os.system("cloc " + filename[:-1])
+
+	# Write file names into a text.
+	def writeFileList(filenames, pathwrite):
+	    clearMethodList(pathwrite)
+	    output = open(pathwrite, 'wb+')
+	    for i in filenames:
+	        output.write(str(i))
+	        output.write("\n")
+	    output.close()
+
+	# clear file name list before write
+	def clearFileList(pathwrite):
+	    if os.path.isfile(pathwrite):
+	        os.remove(pathwrite)
+
 
