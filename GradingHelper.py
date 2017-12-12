@@ -1,6 +1,6 @@
 '''
 --------------------------------------
-    Created by Qiwei Bao on 12/10/2017
+	Created by Qiwei Bao on 12/10/2017
 --------------------------------------
 '''
 
@@ -45,18 +45,27 @@ class GradingHelper():
 		for filename in filenames:
 			os.system("cloc " + filename[:-1])
 
-	# Write file names into a text.
-	def writeFileList(filenames, pathwrite):
-	    clearMethodList(pathwrite)
-	    output = open(pathwrite, 'wb+')
-	    for i in filenames:
-	        output.write(str(i))
-	        output.write("\n")
-	    output.close()
+	# Write data into a text.
+	def writeDataList(self, Data, pathwrite):
+		# self.clearFileList(pathwrite)
+		output = open(pathwrite, 'ab+')
+		for i in Data:
+			output.write(str(i))
+			output.write("\n")
+		output.close()
 
 	# clear file name list before write
-	def clearFileList(pathwrite):
-	    if os.path.isfile(pathwrite):
-	        os.remove(pathwrite)
+	def clearFileList(self, pathwrite):
+		if os.path.isfile(pathwrite):
+			os.remove(pathwrite)
+
+	# Count numbers of files
+	def countFiles(self, filenames):
+		count = 0
+		for file in filenames:
+			count += 1
+		return count
+
+
 
 
