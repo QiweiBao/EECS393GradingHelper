@@ -11,14 +11,16 @@ import logging
 class GradingHelper():
 	# Read names of all the files from a direcotry
 	def readFileNames(self, res, repo_path):
-		if repo_path.find(".") is not -1:
+		if "." is in repo_path:
 			res.append(item)
 			return res
-		fileAndDir =  os.listdir(repo_path)
+		fileAndDir = []
+		if os.path.exists(repo_path):
+			fileAndDir = os.listdir(repo_path)
 
 		for item in fileAndDir:
 			item = repo_path + item + "/"
-			if item.find(".") is -1 and item.find("LICENSE") is -1:
+			if "." not in item:
 				sub_fileAndDir = self.readFileNames(res, item)
 			else:
 				res.append(item)
@@ -27,17 +29,13 @@ class GradingHelper():
 
 	# delete the last / from filenames
 	def formatFileNames(self, filenames):
-		res = []
-		for filename in filenames:
-			filename = filename[:-1]
-			res.append(filename)
-		return res
+		return [filename[:-1] for filename in finenames]
 
 	# Select file names of test cases
 	def selectTestCases(self, filenames):
 		res = []
 		for filename in filenames:
-			if ((filename.find("test") is not -1) or (filename.find("Test") is not -1) or (filename.find("TEST") is not -1)):
+			if (("test" is in filename) or ("Test" is in filename) or ("TEST" is in filename)):
 				res.append(filename)
 		return res
 
@@ -50,11 +48,11 @@ class GradingHelper():
 		return res
 
 	# Count lines of codes using cloc
-	def countLines(self, filePath, dataType):
+	def countLines(self, filePath, pathname, dataType):
 		'''for filename in filenames:
 			os.system("cloc --list-file=" + filePath + "| tee -a /Users/qiweibao/Data/EECS393GradingHelper/" + dataType + "_tmp.txt")
 		'''
-		os.system("cloc --list-file=" + filePath + "| tee -a /Users/qiweibao/Data/EECS393GradingHelper/" + dataType + "_tmp.txt")
+		os.system("cloc --list-file=" + filePath + "| tee -a " + pathname + dataType + "_count.txt")
 
 	# Write data into a text.
 	def writeDataList(self, Data, pathwrite):
@@ -76,6 +74,15 @@ class GradingHelper():
 		for file in filenames:
 			count += 1
 		return count
+
+	# Delete root directory
+	def writeFileList(self, Data, pathwrite):
+		# self.clearFileList(pathwrite)
+		output = open(pathwrite, 'ab+')
+		for i in Data:
+			output.write(".." + str(i)[34:])
+			output.write("\n")
+		output.close()
 
 
 
