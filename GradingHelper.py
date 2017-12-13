@@ -6,6 +6,7 @@
 
 import re
 import os 
+import logging
 
 class GradingHelper():
 	# Read names of all the files from a direcotry
@@ -17,11 +18,19 @@ class GradingHelper():
 
 		for item in fileAndDir:
 			item = repo_path + item + "/"
-			if item.find(".") is -1:
+			if item.find(".") is -1 and item.find("LICENSE") is -1:
 				sub_fileAndDir = self.readFileNames(res, item)
 			else:
 				res.append(item)
 				# fileAndDir.append(item)
+		return res
+
+	# delete the last / from filenames
+	def formatFileNames(self, filenames):
+		res = []
+		for filename in filenames:
+			filename = filename[:-1]
+			res.append(filename)
 		return res
 
 	# Select file names of test cases
@@ -41,9 +50,11 @@ class GradingHelper():
 		return res
 
 	# Count lines of codes using cloc
-	def countLines(self, filenames):
-		for filename in filenames:
-			os.system("cloc " + filename[:-1])
+	def countLines(self, filePath, dataType):
+		'''for filename in filenames:
+			os.system("cloc --list-file=" + filePath + "| tee -a /Users/qiweibao/Data/EECS393GradingHelper/" + dataType + "_tmp.txt")
+		'''
+		os.system("cloc --list-file=" + filePath + "| tee -a /Users/qiweibao/Data/EECS393GradingHelper/" + dataType + "_tmp.txt")
 
 	# Write data into a text.
 	def writeDataList(self, Data, pathwrite):
