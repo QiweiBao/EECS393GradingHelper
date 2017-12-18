@@ -11,7 +11,7 @@ import logging
 class GradingHelper():
 	# Read names of all the files from a direcotry
 	def readFileNames(self, res, repo_path):
-		if "." is in repo_path:
+		if "." in repo_path:
 			res.append(item)
 			return res
 		fileAndDir = []
@@ -35,7 +35,7 @@ class GradingHelper():
 	def selectTestCases(self, filenames):
 		res = []
 		for filename in filenames:
-			if (("test" is in filename) or ("Test" is in filename) or ("TEST" is in filename)):
+			if (("test" in filename) or ("Test" in filename) or ("TEST" in filename)):
 				res.append(filename)
 		return res
 
